@@ -26,10 +26,17 @@ public class AuthenticationScreen extends BaseScreen {
     MobileElement alertButton;
     @FindBy(how = How.ID, using = "android:id/message")
     MobileElement errorDescription;
+    @FindBy(how = How.ID, using = "android:id/button1")
+    MobileElement widgetButton;
 
 
     public AuthenticationScreen(AppiumDriver<MobileElement> driver) {
         super(driver);
+    }
+
+    public AuthenticationScreen closeTheAlert() {
+        widgetButton.click();
+        return this;
     }
 
     public boolean isAlertUserFormat() {
@@ -99,8 +106,9 @@ public class AuthenticationScreen extends BaseScreen {
             return true;
         }
     }
+
     public boolean isErrorMessageInFormat() {
-        Alert alert = new WebDriverWait(driver, 0,5)
+        Alert alert = new WebDriverWait(driver, 0, 5)
                 .until((ExpectedConditions.alertIsPresent()));
         String errorMassage = "User already exists";
         return alert.getText().contains(errorMassage);

@@ -13,14 +13,15 @@ public class RegistrationNegativeTests extends AppiumConfig {
     @Test
     public void negativeRegEmailFormat() {
         int i = (int) (System.currentTimeMillis() / 1000) % 3600;
-        boolean res = new SplashScreen(driver)
+      boolean res=   new SplashScreen(driver)
                 .gotoAuthenticationScreen()
                 .fillEmail("abcd" + i + "mail.com")
                 .fillPassword("Abcd1234$")
                 .submitNegativeRegistration()
                 .isAlertUserFormat();
-        Assert.assertTrue(res);
-        
+              Assert.assertTrue(res);
+              new AuthenticationScreen(driver).closeTheAlert();
+
 
     }
 
@@ -52,16 +53,14 @@ public class RegistrationNegativeTests extends AppiumConfig {
                 .fillEmail("abcd" + i + "@mail.com")
                 .fillPassword("Abcd1234$")
                 .submitNegativeRegistration()
-                .isAlertPresent());
+                .isAlertPresent()
 
-
+       );
     }
     @AfterMethod
     public void postCondition() {
-        if (new ContactListScreen(driver).isContactListActivityPresent()) {
-            new ContactListScreen(driver).logout();
-            new SplashScreen(driver);
+                   new SplashScreen(driver);
         }
-    }
+
 
 }
