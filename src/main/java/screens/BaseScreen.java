@@ -14,18 +14,19 @@ public class BaseScreen {
 
     public BaseScreen(AppiumDriver<MobileElement> driver) {
         this.driver = driver;
-        PageFactory.initElements(new AppiumFieldDecorator(driver),this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
-    public void type(MobileElement element, String text){
-        if(text == null) return;
+    public void type(MobileElement element, String text) {
+        if (text == null) return;
         element.click();
         element.clear();
         element.sendKeys(text);
+        driver.hideKeyboard();
     }
 
 
-    public void pause(int time){
+    public void pause(int time) {
         try {
             Thread.sleep(time);
         } catch (InterruptedException e) {
@@ -33,13 +34,38 @@ public class BaseScreen {
         }
     }
 
-    public void waitElement(MobileElement element, int time){
+    public void waitElement(MobileElement element, int time) {
         new WebDriverWait(driver, time).until(
                 ExpectedConditions.visibilityOf(element)
         );
     }
-    public boolean shouldHave(MobileElement element,String text,int time){
-        return new WebDriverWait(driver,time).until(ExpectedConditions.textToBePresentInElement(element,text));
+
+
+    public boolean shouldHave(MobileElement element, String text, int time) {
+        return new WebDriverWait(driver, time).until(ExpectedConditions.textToBePresentInElement(element, text));
     }
 
+    public boolean isErrorMessageContainsText(String text) {
+        boolean res = false;
+        Alert alert = new WebDriverWait(driver, 5)
+                .until(ExpectedConditions.alertIsPresent());
+        driver.switchTo().alert();
+        res = alert.getText().contains(text);
+        alert.accept();
+        return res;
+    }
+
+    public boolean isAlertPresent() {
+        Alert alert = new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.alertIsPresent());
+        if (alert == null) {
+            return false;
+        } else {
+            driver.switchTo().alert();
+            System.out.println(alert.getText());
+            alert.accept();
+            return true;
+        }
+    }
 }
+

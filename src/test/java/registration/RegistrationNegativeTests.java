@@ -13,17 +13,16 @@ public class RegistrationNegativeTests extends AppiumConfig {
     @Test
     public void negativeRegEmailFormat() {
         int i = (int) (System.currentTimeMillis() / 1000) % 3600;
-      boolean res=   new SplashScreen(driver)
+        boolean res = new SplashScreen(driver)
                 .gotoAuthenticationScreen()
-                .fillEmail("abcd" + i + "mail.com")
+                .fillEmail("wromgmail.com")
                 .fillPassword("Abcd1234$")
                 .submitNegativeRegistration()
                 .isAlertUserFormat();
-              Assert.assertTrue(res);
-              new AuthenticationScreen(driver).closeTheAlert();
-
-
+        Assert.assertTrue(res);
+        new AuthenticationScreen(driver).closeTheAlert();
     }
+
 
     @Test
     public void negativeRegPassFormat() {
@@ -33,13 +32,10 @@ public class RegistrationNegativeTests extends AppiumConfig {
                 .fillEmail("abcd" + i + "@mail.com")
                 .fillPassword("Abcd1234")
                 .submitNegativeRegistration()
-                .isAlertPresent());
-
+                .isErrorMessageContainsText("Error"));
 //        String alertScript=new AuthenticationScreen(driver).alertScript();
 //        Assert.assertEquals("username=must be a well-formed email address",alertScript);
-
     }
-
     @Test
     public void negativeRegExistUser() {
         int i = (int) (System.currentTimeMillis() / 1000) % 3600;
@@ -48,19 +44,16 @@ public class RegistrationNegativeTests extends AppiumConfig {
                 .registration(Auth.builder().email("abcd" + i + "@mail.com").password("Abcd1234$").build())
                 .isContactListActivityPresent();
         new ContactListScreen(driver).logout();
-       Assert.assertTrue( new SplashScreen(driver)
+        Assert.assertTrue(new SplashScreen(driver)
                 .gotoAuthenticationScreen()
                 .fillEmail("abcd" + i + "@mail.com")
                 .fillPassword("Abcd1234$")
                 .submitNegativeRegistration()
                 .isAlertPresent()
-
-       );
+        );
     }
     @AfterMethod
     public void postCondition() {
-                   new SplashScreen(driver);
-        }
-
-
+        new SplashScreen(driver);
+    }
 }
