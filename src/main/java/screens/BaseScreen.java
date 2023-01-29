@@ -3,6 +3,7 @@ package screens;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import models.Contact;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -67,5 +68,7 @@ public class BaseScreen {
             return true;
         }
     }
+
+
 }
 

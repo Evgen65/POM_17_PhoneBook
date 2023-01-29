@@ -56,8 +56,6 @@ public class AddNewContact extends AppiumConfig {
                         .fillContactForm(contact)
                         .submitContactNegative()
                         .isErrorMessageContainsText("Error"));
-
-
     }
 
     @AfterMethod

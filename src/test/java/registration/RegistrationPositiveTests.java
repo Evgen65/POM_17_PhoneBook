@@ -3,8 +3,10 @@ package registration;
 import config.AppiumConfig;
 import models.Auth;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import screens.AuthenticationScreen;
 import screens.ContactListScreen;
 import screens.SplashScreen;
 
@@ -21,6 +23,7 @@ public class RegistrationPositiveTests extends AppiumConfig {
         Assert.assertTrue(res);
 
     }
+
     @Test
     public void registrationSuccessModels() {
         int i = (int) (System.currentTimeMillis() / 1000) % 3600;
@@ -29,13 +32,21 @@ public class RegistrationPositiveTests extends AppiumConfig {
                 .registration(Auth.builder().email("abcd" + i + "@mail.com").password("Abcd1234$").build())
                 .isContactListActivityPresent();
         Assert.assertTrue(res);
+    }
 
+    @Test
+    public void negativeRegEmailFormat() {
+        int i = (int) (System.currentTimeMillis() / 1000) % 3600;
+        Assert.assertTrue(new SplashScreen(driver)
+                .gotoAuthenticationScreen()
+                .fillEmail("wrongmail.com")
+                .fillPassword("Abcd1234$")
+                .submitNegativeRegistration()
+                .isErrorMessageContainsText("username=must be a well-formed email address"));
+                new SplashScreen(driver);
     }
     @AfterMethod
     public void postCondition() {
-        if (new ContactListScreen(driver).isContactListActivityPresent()) {
-            new ContactListScreen(driver).logout();
-            new SplashScreen(driver);
-        }
-   }
+
+    }
 }
