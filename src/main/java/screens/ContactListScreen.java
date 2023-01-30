@@ -17,7 +17,7 @@ public class ContactListScreen extends BaseScreen {
     }
 
     @FindBy(xpath = "//*[@content-desc='More options']")
-    MobileElement moreOption;
+    MobileElement moreOptions;
     @FindBy(id = "com.sheygam.contactapp:id/add_contact_btn")
     MobileElement plusButton;
     @FindBy(id = "com.sheygam.contactapp:id/title")
@@ -37,12 +37,23 @@ public class ContactListScreen extends BaseScreen {
     public boolean isContactListActivityPresent() {
         return shouldHave(activityViewText, "Contact list", 5000);
     }
+    public ContactListScreen moreOption(){
+        if(isDisplayedWithExp(moreOptions,10)) {
+            moreOptions.click();
+        }
+        return this;
+
+    }
 
     public AuthenticationScreen logout() {
-        moreOption.click();
-        logoutButton.click();
+
+        if(isDisplayedWithExp(logoutButton,5)) {
+            logoutButton.click();
+        }
         return new AuthenticationScreen(driver);
     }
+
+
 
     public AddNewContactScreen openContactForm() {
         waitElement(plusButton, 5);
@@ -51,6 +62,7 @@ public class ContactListScreen extends BaseScreen {
     }
 
     public ContactListScreen isContactAdded(Contact contact) {
+
         boolean checkName = checkContainsText(names, contact.getName());
         boolean checkPhone = checkContainsText(phones, contact.getPhone());
         Assert.assertTrue(checkPhone && checkName);
@@ -58,6 +70,7 @@ public class ContactListScreen extends BaseScreen {
     }
 
     public boolean checkContainsText(List<MobileElement> list, String text) {
+
         for (MobileElement e : list) {
             if (e.getText().contains(text)) {
                 return true;

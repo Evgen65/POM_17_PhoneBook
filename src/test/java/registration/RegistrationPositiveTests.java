@@ -14,13 +14,12 @@ public class RegistrationPositiveTests extends AppiumConfig {
     @Test
     public void registrationSuccess() {
         int i = (int) (System.currentTimeMillis() / 1000) % 3600;
-        boolean res = new SplashScreen(driver)
+        Assert.assertTrue(new SplashScreen(driver)
                 .gotoAuthenticationScreen()
                 .fillEmail("abcd" + i + "@mail.com")
                 .fillPassword("Abcd1234$")
                 .submitRegistration()
-                .isContactListActivityPresent();
-        Assert.assertTrue(res);
+                .isContactListActivityPresent());
 
     }
 
@@ -31,7 +30,7 @@ public class RegistrationPositiveTests extends AppiumConfig {
                 .gotoAuthenticationScreen()
                 .registration(Auth.builder().email("abcd" + i + "@mail.com").password("Abcd1234$").build())
                 .isContactListActivityPresent();
-        Assert.assertTrue(res);
+
     }
 
     @Test
@@ -43,10 +42,13 @@ public class RegistrationPositiveTests extends AppiumConfig {
                 .fillPassword("Abcd1234$")
                 .submitNegativeRegistration()
                 .isErrorMessageContainsText("username=must be a well-formed email address"));
-                new SplashScreen(driver);
+
     }
+
     @AfterMethod
     public void postCondition() {
+        new ContactListScreen(driver).moreOption().logout();
+        new SplashScreen(driver);
 
     }
 }

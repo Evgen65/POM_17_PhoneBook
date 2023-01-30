@@ -60,13 +60,9 @@ public class AddNewContact extends AppiumConfig {
 
     @AfterMethod
     public void postCondition() {
+       // new ContactListScreen(driver).moreOption().logout();
         new SplashScreen(driver);
     }
 
-//    public void postCondition() {
-//        if (new ContactListScreen(driver).isContactListActivityPresent()) {
-//            new ContactListScreen(driver).logout();
-//            new SplashScreen(driver);
-//        }
-//    }
+
 }

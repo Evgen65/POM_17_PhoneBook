@@ -53,6 +53,7 @@ public class BaseScreen {
         driver.switchTo().alert();
         res = alert.getText().contains(text);
         alert.accept();
+      // driver.navigate().back();
         return res;
     }
 
@@ -63,9 +64,16 @@ public class BaseScreen {
             return false;
         } else {
             driver.switchTo().alert();
-            System.out.println(alert.getText());
             alert.accept();
             return true;
+        }
+    }
+    public boolean isDisplayedWithExp(MobileElement element,int time){
+        try {
+            waitElement(element, time);
+            return element.isDisplayed();
+        }catch (Exception ex){
+            return false;
         }
     }
 

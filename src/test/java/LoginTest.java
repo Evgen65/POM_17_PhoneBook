@@ -31,7 +31,7 @@ public class LoginTest extends AppiumConfig {
     @AfterMethod
     public void postCondition() {
         if (new ContactListScreen(driver).isContactListActivityPresent()) {
-            new ContactListScreen(driver).logout();
+            new ContactListScreen(driver).moreOption().logout();
             new SplashScreen(driver);
         }
     }
