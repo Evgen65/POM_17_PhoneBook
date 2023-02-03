@@ -53,7 +53,7 @@ public class BaseScreen {
         driver.switchTo().alert();
         res = alert.getText().contains(text);
         alert.accept();
-      // driver.navigate().back();
+       driver.navigate().back();
         return res;
     }
 
