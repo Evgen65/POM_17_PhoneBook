@@ -40,7 +40,6 @@ public class AddNewContactScreen
         type(inputDescription, contact.getDescription());
         return this;
     }
-
     public ContactListScreen submitContact(){
         buttonCreate.click();
         return new ContactListScreen(driver);
@@ -50,11 +49,8 @@ public class AddNewContactScreen
         return this;
     }
 
-
     public AddNewContactScreen closeButtonAlert() {
         buttonAlert.click();
         return this;
     }
-
-
 }
